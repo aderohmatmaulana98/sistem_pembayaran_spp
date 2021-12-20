@@ -37,7 +37,11 @@
                         <div class="d-none d-md-block d-lg-inline-block"><?= $user['nama']; ?></div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="<?= base_url('user/my_profile') ?>"><i data-feather="user"></i> Profile</a>
+                        <?php if ($user['role_id'] == 1) : ?>
+                            <a class="dropdown-item" href="<?= base_url('admin/my_profile') ?>"><i data-feather="user"></i> Profile</a>
+                        <?php else : ?>
+                            <a class="dropdown-item" href="<?= base_url('user/my_profile') ?>"><i data-feather="user"></i> Profile</a>
+                        <?php endif; ?>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?= base_url('auth/logout') ?>"><i data-feather="log-out"></i> Logout</a>
                     </div>

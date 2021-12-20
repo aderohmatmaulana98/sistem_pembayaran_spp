@@ -38,9 +38,36 @@
                                                     <td class="text-bold-500"><?= $i ?></td>
                                                     <td><?= $r['role'] ?></td>
                                                     <td class="text-bold-500">
+                                                        <!-- Edit -->
                                                         <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="btn badge bg-warning"><i data-feather="edit" width="20" class="mb-1"></i>Access</a>
-                                                        <a class="btn badge bg-success"><i data-feather="edit" width="20" class="mb-1"></i>Edit</a>
-                                                        <a class="btn badge bg-danger"><i data-feather="trash-2" width="20" class="mb-1"></i>Hapus</a>
+                                                        <!-- Button trigger modal -->
+                                                        <a class="btn badge bg-success" data-bs-toggle="modal" data-bs-target="#exampleModal1<?= $r['id']; ?>"><i data-feather="edit" width="20" class="mb-1"></i>Edit</a>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal1<?= $r['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel1">Edit Role</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <form action="<?= base_url('admin/update_role'); ?>" method="POST">
+                                                                        <div class="modal-body">
+                                                                            <div class="form-group">
+                                                                                <input type="text" class="form-control" id="role" name="role" value="<?= $r['role'] ?>">
+                                                                                <input type="hidden" id="id" name="id" value="<?= $r['id'] ?>">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End Edit -->
+                                                        <a class="btn badge bg-danger" onclick="javascript: return confirm('Anda yakin akan menghapus ini? ')" href="<?= base_url('admin/delete_role/' . $r['id']) ?>"><i data-feather="trash-2" width="20" class="mb-1"></i>Hapus</a>
                                                     </td>
                                                 </tr>
                                                 <?php $i++; ?>

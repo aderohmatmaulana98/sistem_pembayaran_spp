@@ -43,6 +43,9 @@
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
+                                    <div class="text-center">
+                                        <a href="<?= base_url('admin/role') ?>" class="btn btn-primary my-3"><i data-feather="arrow-left" width="20" class="mb-1"></i>Kembali</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
