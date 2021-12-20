@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 */config/development
 */logs/log-*.php
 !*/logs/index.html
@@ -6,6 +7,8 @@
 !*/cache/index.html
 !*/cache/.htaccess
 =======
+=======
+>>>>>>> 94c48a3c8b0a2008d7e7eef1069e661a25934c73
 .DS_Store
 
 application/cache/*
@@ -17,12 +20,16 @@ application/logs/*
 !application/*/.htaccess
 
 composer.lock
+<<<<<<< HEAD
 >>>>>>> 94c48a3 (first commit)
+=======
+>>>>>>> 94c48a3c8b0a2008d7e7eef1069e661a25934c73
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 #codeigniter 3
@@ -31,6 +38,8 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 =======
+=======
+>>>>>>> 94c48a3c8b0a2008d7e7eef1069e661a25934c73
 /vendor/
 
 # IDE Files
@@ -46,4 +55,7 @@ application/logs/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+<<<<<<< HEAD
 >>>>>>> 94c48a3 (first commit)
+=======
+>>>>>>> 94c48a3c8b0a2008d7e7eef1069e661a25934c73
