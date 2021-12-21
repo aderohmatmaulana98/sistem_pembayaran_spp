@@ -58,6 +58,9 @@
                         </a>
 
                         <ul class="submenu ">
+                            <li>
+                                <a href="<?= base_url('admin/tahun_ajaran') ?>">Tahun Ajaran</a>
+                            </li>
 
                             <li>
                                 <a href="<?= base_url('user/my_profile') ?>">Profile</a>
