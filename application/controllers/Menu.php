@@ -73,4 +73,67 @@ class Menu extends CI_Controller
             redirect('menu/submenu');
         }
     }
+
+    public function edit_menu()
+    {
+        $menu = $this->input->post('menu');
+        $id = $this->input->post('id');
+
+        $data = ['menu' => $menu];
+        $where = ['id' => $id];
+
+        $this->db->where($where);
+        $this->db->update('user_menu', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Menu berhasil diubah !
+      </div>');
+
+        redirect('menu');
+    }
+
+    public function delete_menu($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user_menu');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Menu berhasil dihapus !
+      </div>');
+
+        redirect('menu');
+    }
+
+    public function edit_submenu()
+    {
+        $title = $this->input->post('title');
+        $id = $this->input->post('id');
+        $menu_id = $this->input->post('menu');
+        $url = $this->input->post('url');
+        $icon = $this->input->post('icon');
+        $is_active = $this->input->post('active');
+
+        $sql = "UPDATE `user_sub_menu`, `user_menu`
+                SET `user_sub_menu`.`title` = '$title', `user_sub_menu`.`menu_id` = $menu_id, `user_sub_menu`.`url` = '$url', `user_sub_menu`.`icon` = '$icon', `user_sub_menu`.`is_active` = $is_active
+                WHERE `user_menu`.`id` = `user_sub_menu`.`menu_id`
+                AND `user_sub_menu`.`id` = $id";
+        $this->db->query($sql);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+					Submenu berhasil di ubah !
+					  </div>');
+        redirect('menu/submenu');
+    }
+
+    public function delete_submenu($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user_sub_menu');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Submenu berhasil dihapus !
+      </div>');
+
+        redirect('menu/submenu');
+    }
 }

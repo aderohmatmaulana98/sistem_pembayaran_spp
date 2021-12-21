@@ -98,12 +98,21 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Role';
         $data['role'] = $this->db->get('user_role')->result_array();
+        $this->form_validation->set_rules('role', 'Role', 'required|trim');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/role', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->db->insert('user_role', ['role' => $this->input->post('role')]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+			Role berhasil ditambahkan !
+		  </div>');
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/role', $data);
-        $this->load->view('templates/footer');
+            redirect('admin/role');
+        }
     }
 
     public function roleAccess($role_id)
@@ -142,5 +151,34 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
 			Akses Di ubah !
 		  </div>');
+    }
+    public function update_role()
+    {
+        $role = $this->input->post('role');
+        $id = $this->input->post('id');
+
+        $data = ['role' => $role];
+        $where = ['id' => $id];
+
+        $this->db->where($where);
+        $this->db->update('user_role', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Role berhasil diubah !
+      </div>');
+
+        redirect('admin/role');
+    }
+
+    public function delete_role($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user_role');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Role berhasil dihapus !
+      </div>');
+
+        redirect('admin/role');
     }
 }
