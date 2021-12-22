@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th>NO</th>
-                            <th>NIS/NISN</th>
+                            <th>NISN</th>
                             <th>Nama siswa</th>
                             <th>AKSI</th>
                         </tr>

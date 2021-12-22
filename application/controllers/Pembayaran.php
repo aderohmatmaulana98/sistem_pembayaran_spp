@@ -12,12 +12,12 @@ class Pembayaran extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pembayaran';
-        $data1['user'] = $this->db->get('user')->result();
+        $data['siswa'] = $this->db->get_where('user', ['role_id' => 2])->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('pembayaran/index', $data1);
+        $this->load->view('pembayaran/index', $data);
         $this->load->view('templates/footer');
     }
     public function detail($nisn)
@@ -49,7 +49,7 @@ class Pembayaran extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pembayaran';
-        $data['siswa'] = $this->db->get('siswa')->result();
+        $data['siswa'] = $this->db->get_where('user', ['role_id' => 2])->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

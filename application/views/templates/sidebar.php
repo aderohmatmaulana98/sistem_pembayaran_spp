@@ -58,9 +58,11 @@
                         </a>
 
                         <ul class="submenu ">
-                            <li>
-                                <a href="<?= base_url('admin/tahun_ajaran') ?>">Tahun Ajaran</a>
-                            </li>
+                            <?php if ($user['role_id'] == 1) : ?>
+                                <li>
+                                    <a href="<?= base_url('admin/tahun_ajaran') ?>">Tahun Ajaran</a>
+                                </li>
+                            <?php endif; ?>
 
                             <li>
                                 <?php if ($user['role_id'] == '1') : ?>
