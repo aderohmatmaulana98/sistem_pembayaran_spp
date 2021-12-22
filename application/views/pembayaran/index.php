@@ -22,14 +22,14 @@
                     <tbody>
                         <?php
                         $id = 1;
-                        foreach ($siswa as $u) {
+                        foreach ($user as $u) {
                         ?>
                             <tr>
                                 <td><?php echo $id++ ?></td>
-                                <td><?php echo $u->nis ?></td>
-                                <td><?php echo $u->nama_siswa ?></td>
+                                <td><?php echo $u->nisn ?></td>
+                                <td><?php echo $u->nama ?></td>
                                 <td>
-                                    <?php echo anchor('pembayaran/detail/' . $u->nis, '<input type=reset class="btn btn-info" value=\'Detail\'>'); ?>
+                                    <?php echo anchor('pembayaran/detail/' . $u->nisn, '<input type=reset class="btn btn-info" value=\'Detail\'>'); ?>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -39,6 +39,3 @@
         </div>
     </div>
 </div>
-<!-- /.container-fluid -->
-</div>
-<!-- End of Main Content -->

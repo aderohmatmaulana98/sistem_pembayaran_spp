@@ -63,7 +63,7 @@
                             </li>
 
                             <li>
-                                <?php if ($user['role_id'] == 1) : ?>
+                                <?php if ($user['role_id'] == '1') : ?>
                                     <a href="<?= base_url('admin/my_profile') ?>">Profile</a>
                                 <?php else : ?>
                                     <a href="<?= base_url('user/my_profile') ?>">Profile</a>

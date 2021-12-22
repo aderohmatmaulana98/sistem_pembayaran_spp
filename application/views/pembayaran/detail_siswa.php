@@ -9,14 +9,14 @@
             <div class="card-body">
                 <table class="table table-striped">
                     <tbody>
-                        <?php foreach ($siswa as $u) { ?>
+                        <?php foreach ($user as $u) { ?>
                             <tr>
                                 <td>Nis </td>
-                                <td>: <?php echo $u->nis ?></td>
+                                <td>: <?php echo $u->nisn ?></td>
                             </tr>
                             <tr>
                                 <td>Nama siswa</td>
-                                <td>: <span id="nm-siswa"><?php echo $u->nama_siswa ?></span></td>
+                                <td>: <span id="nm-siswa"><?php echo $u->nama ?></span></td>
                             </tr>
                             <!-- <tr>
                                 <td>Jenis Kelmain</td>
