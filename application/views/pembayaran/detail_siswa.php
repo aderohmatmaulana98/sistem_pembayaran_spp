@@ -9,36 +9,16 @@
             <div class="card-body">
                 <table class="table table-striped">
                     <tbody>
-                        <?php foreach ($siswa as $u) { ?>
+                        <?php foreach ($siswa as $u) : ?>
                             <tr>
-                                <td>Nis </td>
-                                <td>: <?php echo $u->nis ?></td>
+                                <td>NISN </td>
+                                <td>: <?php echo $u->nisn ?></td>
                             </tr>
                             <tr>
                                 <td>Nama siswa</td>
-                                <td>: <span id="nm-siswa"><?php echo $u->nama_siswa ?></span></td>
+                                <td>: <span id="nm-siswa"><?php echo $u->nama ?></span></td>
                             </tr>
-                            <!-- <tr>
-                                <td>Jenis Kelmain</td>
-                                <td>: <?php echo $u->jenis_kelamin ?></td>
-                            </tr>
-                            <tr>
-                                <td>Angkatan</td>
-                                <td>: <?php echo $u->angkatan ?></td>
-                            </tr>
-                            <tr>
-                                <td>Kamar</td>
-                                <td>: <?php echo $u->kamar ?></td>
-                            </tr>
-                            <tr>
-                                <td>Alamat</td>
-                                <td>: <?php echo $u->alamat ?></td>
-                            </tr>
-                            <tr>
-                                <td>NO HP</td>
-                                <td>: <?php echo $u->no_hp ?></td>
-                            </tr> -->
-                        <?php } ?>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>

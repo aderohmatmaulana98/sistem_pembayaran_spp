@@ -12,7 +12,7 @@ class Pembayaran extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pembayaran';
-        $data['siswa'] = $this->db->get('siswa')->result();
+        $data['siswa'] = $this->db->get_where('user', ['role_id' => 2])->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -24,11 +24,11 @@ class Pembayaran extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pembayaran';
-        $data['siswa'] = $this->db->get('siswa')->result();
+        $data['siswa'] = $this->db->get_where('user', ['role_id' => 2])->result();
 
 
-        $query = $this->db->query('SELECT * FROM siswa 
-				WHERE nis =' . $nis . '');
+        $query = $this->db->query('SELECT * FROM user 
+				WHERE nisn =' . $nis . '');
         if ($query->num_rows() == 0) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -49,7 +49,7 @@ class Pembayaran extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pembayaran';
-        $data['siswa'] = $this->db->get('siswa')->result();
+        $data['siswa'] = $this->db->get_where('user', ['role_id' => 2])->result();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
