@@ -181,4 +181,123 @@ class Admin extends CI_Controller
 
         redirect('admin/role');
     }
+
+    public function buat_admin()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Buat Admin';
+        $data['admin'] = $this->db->get_where('user', ['role_id' => 1])->result_array();
+
+        $this->form_validation->set_rules('fullname', 'Nama Lengkap', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+            'is_unique' => 'Email must unique!'
+        ]);
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]', [
+            'min_length' => 'Password to short!'
+        ]);
+
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/buat_admin', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'nisn' => 0123,
+                'nama' =>  htmlspecialchars($this->input->post('fullname', true)),
+                'email' =>  htmlspecialchars($this->input->post('email', true)),
+                'jenis_kelamin' =>  1,
+                'image' =>  'default.png',
+                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'role_id' => 1,
+                'is_active' => 1,
+                'date_created' => time()
+            ];
+            $this->db->insert('user', $data);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+			Akun admin berhasil dibuat !
+		  </div>');
+
+            redirect('admin/buat_admin');
+        }
+    }
+    public function change_password()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Change Password';
+
+        $this->form_validation->set_rules('current_password', 'Password saat ini', 'required|trim');
+        $this->form_validation->set_rules('new_password', 'Password baru', 'required|trim|min_length[6]|matches[konfirmasi_password]');
+        $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi password', 'required|trim|min_length[6]|matches[new_password]');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/changepassword', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $current_password = $this->input->post('current_password');
+            $new_password = $this->input->post('new_password');
+            if (!password_verify($current_password, $data['user']['password'])) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+			Password saat ini salah !
+		  </div>');
+
+                redirect('admin/change_password');
+            } else {
+                if ($current_password == $new_password) {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                    Password baru tidak boleh sama dengan saat ini !
+                  </div>');
+                    redirect('admin/change_password');
+                } else {
+                    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+                    $this->db->set('password', $password_hash);
+                    $this->db->where('email', $this->session->userdata('email'));
+                    $this->db->update('user');
+
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+                    Password berhasil diubah !
+                  </div>');
+                    redirect('admin/change_password');
+                }
+            }
+        }
+    }
+
+    public function edit_admin()
+    {
+        $nama = $this->input->post('nama');
+        $email = $this->input->post('email');
+        $id = $this->input->post('id');
+
+        $data = ['nama' => $nama, 'email' => $email];
+        $where = ['id' => $id];
+
+        $this->db->where($where);
+        $this->db->update('user', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Admin berhasil diubah !
+      </div>');
+
+        redirect('admin/buat_admin');
+    }
+
+    public function delete_admin($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Admin berhasil dihapus !
+      </div>');
+
+        redirect('admin/buat_admin');
+    }
 }

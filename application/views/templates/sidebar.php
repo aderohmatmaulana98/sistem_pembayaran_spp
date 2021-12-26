@@ -73,7 +73,11 @@
                             </li>
 
                             <li>
-                                <a href="auth-register.html">Change Password</a>
+                                <?php if ($user['role_id'] == 1) : ?>
+                                    <a href="<?= base_url('admin/change_password') ?>">Change Password</a>
+                                <?php else : ?>
+                                    <a href="<?= base_url('user/change_password') ?>">Change Password</a>
+                                <?php endif; ?>
                             </li>
 
                             <li>
