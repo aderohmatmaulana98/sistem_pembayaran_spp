@@ -14,6 +14,7 @@
                         <thead>
                             <tr>
                                 <th>NO</th>
+                                <th>NISN</th>
                                 <th>Tahun Ajaran</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Dibayar</th>
@@ -22,27 +23,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <?php
-                                    $id = 1;
+                            <?php
+                            $no = 1;
 
-                                    foreach ($pembayaran_bulanan as $u) {
-                                    ?>
+                            foreach ($siswa_buku as $t) {
+                            ?>
                                 <tr>
-                                    <td><?php echo $id++ ?></td>
-                                    <td><?php echo $u->tahun_ajaran ?></td>
-                                    <td><?php echo $u->jenis_pembayaran ?></td>
-                                    <td><b><?php echo 'Rp. ' . number_format($u->total_spp, 0, ',', '.'); ?></b></td>
-                                    <td style="<?= ($u->status_bayar == 'Lunas' ? 'color: green' : 'color: red') ?>"><?php echo $u->status_bayar ?></td>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $t->nisn ?></td>
+
+                                    <td><?php echo $t->tahun_ajaran_id ?></td>
+                                    <td><?php echo $t->jenis_pembayaran ?></td>
+                                    <td><?php echo $t->deadline ?></td>
+                                    <td><?php echo $t->is_active ?></td>
+                                    <td style="<?= ($t->status_bayar == 'Lunas' ? 'color: green' : 'color: red') ?>"><?php echo $t->status_bayar ?></td> -->
                                     <td>
                                         <?php
-                                        if ($u->status_bayar != 'Lunas') {
-                                            echo anchor('pembayaran/spp_bulanan/' . $u->id_pem_bulan . '/' . $u->nis, '<input type=submit class="btn btn-warning" value=\'bayar\'>');
+                                        if ($t->status_bayar != 'Lunas') {
+                                            echo anchor('pembayaran/spp_bulanan/' . '/' . $t->nisn, '<input type=submit class="btn btn-warning" value=\'bayar\'>');
                                         }
-                                        echo anchor('pembayaran/cetak_spp_bulanan/' . $u->id_pem_bulan . '/' . $u->nis, 'Cetak', array('title' => 'Cetak kartu SPP', 'class' => 'btn btn-info'));
+                                        echo anchor('pembayaran/cetak_spp_bulanan/' . '/' . $t->nisn, 'Cetak', array('title' => 'Cetak kartu SPP', 'class' => 'btn btn-info'));
                                         ?>
                                     </td>
                                 </tr>
-                            <?php } ?> -->
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

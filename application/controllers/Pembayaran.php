@@ -6,6 +6,8 @@ class Pembayaran extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('M_transaksi');
+        $this->load->helper('url');
     }
 
     public function index()
@@ -24,23 +26,25 @@ class Pembayaran extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pembayaran';
-        $data1['user'] = $this->db->get('user')->result();
+        $where1 = array('nisn' => $nisn);
+        $data1['siswa'] = $this->M_transaksi->tampil_detail($where1)->result();
+        $data1['siswa_buku'] = $this->M_transaksi->tampil_buku($where1)->result();
+
 
 
         $query = $this->db->query('SELECT * FROM user 
-				WHERE nisn =' . $nisn . '');
+				WHERE nisn =' . $nisn .  '');
         if ($query->num_rows() == 0) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('pembayaran/detail_siswa', $data);
+            $this->load->view('pembayaran/detail_siswa', $data1);
             $this->load->view('templates/footer');
         } else {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('pembayaran/detail_siswa', $data1);
-            $this->load->view('pembayaran/pembayaran_spp', $data1);
             $this->load->view('pembayaran/pembayaran_buku', $data1);
             $this->load->view('templates/footer');
         }

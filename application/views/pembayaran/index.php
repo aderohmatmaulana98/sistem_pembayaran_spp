@@ -22,7 +22,7 @@
                     <tbody>
                         <?php
                         $id = 1;
-                        foreach ($user as $u) {
+                        foreach ($siswa as $u) {
                         ?>
                             <tr>
                                 <td><?php echo $id++ ?></td>
