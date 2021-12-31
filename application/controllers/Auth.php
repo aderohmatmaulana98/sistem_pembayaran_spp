@@ -79,7 +79,14 @@ class Auth extends CI_Controller
             $this->load->view('templates/auth-footer');
         } else {
             $data = [
+                'nisn' => $this->input->post('nisn', true),
                 'nama' =>  htmlspecialchars($this->input->post('fullname', true)),
+                'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+                'rombel_id' => $this->input->post('jurusan', true),
+                'tempat_lahir' =>  htmlspecialchars($this->input->post('tempat_lahir', true)),
+                'tgl_lahir' => $this->input->post('tgl_lahir', true),
+                'no_hp' => $this->input->post('no_hp', true),
+                'alamat' => $this->input->post('alamat', true),
                 'email' =>  htmlspecialchars($this->input->post('email', true)),
                 'image' =>  'default.png',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),

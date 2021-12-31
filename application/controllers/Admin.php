@@ -300,4 +300,77 @@ class Admin extends CI_Controller
 
         redirect('admin/buat_admin');
     }
+
+    public function whatsapp()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Whatsapp';
+
+        $this->form_validation->set_rules('pesan', 'Pesan', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/whatsapp', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $pesan = $this->input->post('pesan');
+
+            $sql = "SELECT user.no_hp
+                    FROM USER
+                    WHERE user.role_id = 2";
+            $no_hp = $this->db->query($sql)->result_array();
+
+            foreach ($no_hp as $n) {
+
+                $this->_sendwa($pesan, $no_hp, $n);
+            }
+            die;
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Pesan berhasil dikirim !
+          </div>');
+
+            redirect('admin/whatsapp');
+        }
+    }
+
+    private function _sendwa($pesan, $no_hp, $n)
+    {
+        $n = $n['no_hp'];
+        $curl = curl_init();
+        $token = "2APPlbuVrzVm4D9WVZZOtRzB034znPIuQdMn85fPYVd7px2fncFMmD2V7ZmTlXA4";
+        $payload = [
+            "data" => [
+                [
+                    'phone' => $n,
+                    'message' => $pesan,
+                    'secret' => false, // or true
+                    'priority' => false, // or true
+                ],
+            ],
+        ];
+
+        curl_setopt(
+            $curl,
+            CURLOPT_HTTPHEADER,
+            array(
+                "Authorization: $token",
+                "Content-Type: application/json"
+            )
+        );
+
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($curl, CURLOPT_URL, "https://teras.wablas.com/api/v2/send-bulk/text");
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        echo "<pre>";
+        print_r($result);
+    }
 }
