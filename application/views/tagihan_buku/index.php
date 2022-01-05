@@ -100,7 +100,7 @@
             <div class="p-5">
                 <form class="user" method="post" action="<?= base_url('tagihan_buku/tambah_tagbuku'); ?>" enctype="multipart/form-data">
                     <div class="form-group">
-
+                    <input type="text" class="form-control form-control-user" id="status_bayar" name="status_bayar" placeholder="Masukan status_bayar" value="<?= set_value('status_bayar'); ?>" hidden>
                         <input type="text" class="form-control form-control-user" id="id_tag_buku" name="id_tag_buku" placeholder="Masukan id_tag_buku" value="<?= set_value('id_tag_buku'); ?>" hidden>
                         <?= form_error('id_tag_buku', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
@@ -127,24 +127,12 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <!-- <div class="form-group">
-                        <label>Jenis Pembayaran</label>
-                        <select id="jenis_pembayaran" name="jenis_pembayaran" class="form-control" oninput="CekInput()">
-                            <option>Pilih Jenis Pembayaran</option>
-                            <?php
-                            foreach ($this->db->query('SELECT * from jenis_pembayaran')->result() as $sis) { /*$this->m_transaksi->tampil_datatahun()->result() */
-                            ?>
-
-                                <option value="<?php echo $sis->jenis_pembayaran ?>"> <?php echo $sis->jenis_pembayaran ?> | Rp.<?php echo number_format($sis->besar_tagihan) ?> </option>
-                            <?php } ?>
-                        </select>
+                    <div class="form-group">
+                        <label>Deadline</label>
+                        <input type="date" class="form-control form-control-user" id="deadline" name="deadline" placeholder="Masukan Jenis Pembayaran" value="<?= set_value('deadline'); ?>">
+                        <?= form_error('deadline', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
-                    <div class="form-group" id="cek2">
-                        <span id="format2"></span>
-                        <label>Total Tagihan</label>
-                        <input type="text" class="form-control form-control-user" id="saldo" name="besar_tagihan" placeholder="Masukan besar_tagihan" value="<?= set_value('besar_tagihan'); ?>" onkeyup="document.getElementById('format2').innerHTML = formatCurrency(this.value);" readonly>
-                        <?= form_error('besar_tagihan', '<small class="text-danger pl-3">', '</small>'); ?>
-                    </div> -->
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Tambah</button>

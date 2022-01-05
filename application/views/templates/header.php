@@ -7,7 +7,7 @@
     <title><?= $title ?></title>
 
     <link rel="stylesheet" href="<?= base_url('assets/assets/css/bootstrap.css') ?>">
-
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <link rel="stylesheet" href="<?= base_url('assets/assets/vendors/chartjs/Chart.min.css') ?>">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/assets/vendors/perfect-scrollbar/perfect-scrollbar.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/assets/css/app.css') ?>">
     <link rel="shortcut icon" href="<?= base_url('assets/assets/images/favicon.svg')  ?>" type="image/x-icon">
-
+    <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body>

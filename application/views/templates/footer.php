@@ -21,6 +21,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url('assets/'); ?>vendor/bootstrap-select/dist/js/bootstrap-select.js"></script>
 
+
+
 <script src=" <?= base_url('assets/assets/js/main.js') ?>"></script>
 
 <script>

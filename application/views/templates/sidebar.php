@@ -73,6 +73,11 @@
                                     <a href="<?= base_url('jenis_pembayaran') ?>">Jenis Pembayaran</a>
                                 </li>
                             <?php endif; ?>
+                            <?php if ($user['role_id'] == 1) : ?>
+                                <li>
+                                    <a href="<?= base_url('pembayaran/index_bulanan') ?>">Pembayaran Spp</a>
+                                </li>
+                            <?php endif; ?>
                             <li>
                                 <?php if ($user['role_id'] == '1') : ?>
                                     <a href="<?= base_url('admin/my_profile') ?>">Profile</a>

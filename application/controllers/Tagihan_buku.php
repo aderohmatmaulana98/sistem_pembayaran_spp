@@ -16,29 +16,6 @@ class Tagihan_buku extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Buku';
         $data['tagihan_buku'] = $this->db->get('tagihan_buku')->result();
-        $sql = "select jenis_pembayaran.besar_tagihan from jenis_pembayaran where jenis_pembayaran.jenis_pembayaran = 'Semester 1'";
-        $data['semester1'] = $this->db->query($sql)->row_array();
-        $data['semester1'] = $data['semester1']['besar_tagihan'];
-
-        $sql = "select jenis_pembayaran.besar_tagihan from jenis_pembayaran where jenis_pembayaran.jenis_pembayaran = 'Semester 2'";
-        $data['semester2'] = $this->db->query($sql)->row_array();
-        $data['semester2'] = $data['semester2']['besar_tagihan'];
-
-        $sql = "select jenis_pembayaran.besar_tagihan from jenis_pembayaran where jenis_pembayaran.jenis_pembayaran = 'Semester 3'";
-        $data['semester3'] = $this->db->query($sql)->row_array();
-        $data['semester3'] = $data['semester3']['besar_tagihan'];
-
-        $sql = "select jenis_pembayaran.besar_tagihan from jenis_pembayaran where jenis_pembayaran.jenis_pembayaran = 'Semester 4'";
-        $data['semester4'] = $this->db->query($sql)->row_array();
-        $data['semester4'] = $data['semester4']['besar_tagihan'];
-
-        $sql = "select jenis_pembayaran.besar_tagihan from jenis_pembayaran where jenis_pembayaran.jenis_pembayaran = 'Semester 5'";
-        $data['semester5'] = $this->db->query($sql)->row_array();
-        $data['semester5'] = $data['semester5']['besar_tagihan'];
-
-        $sql = "select jenis_pembayaran.besar_tagihan from jenis_pembayaran where jenis_pembayaran.jenis_pembayaran = 'Semester 6'";
-        $data['semester6'] = $this->db->query($sql)->row_array();
-        $data['semester6'] = $data['semester6']['besar_tagihan'];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -54,6 +31,7 @@ class Tagihan_buku extends CI_Controller
         $deadline = $this->input->post('deadline');
         // $id_trans = rand(000000, 999999);
         $user_id = $this->input->post('user_id');
+        $status_bayar = $this->input->post('status_bayar');
         $data = array();
         $index = 0; // Set index array awal dengan 0
         foreach ($nisn as $key) { // Kita buat perulangan berdasarkan nis sampai data terakhir
@@ -63,6 +41,7 @@ class Tagihan_buku extends CI_Controller
                 'id_tag_buku' => $id_tag_buku++,  // Ambil dan set data nama sesuai index array dari $index
                 'tahun_ajaran_id' => $tahun_ajaran_id,
                 'deadline' => $deadline,
+                'status_bayar' => '1',
                 // 'id_trans' => $id_trans,  // Ambil dan set data telepon sesuai index array dari $index
             ));
             $key;
