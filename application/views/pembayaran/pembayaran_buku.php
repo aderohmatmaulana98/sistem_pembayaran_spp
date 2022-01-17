@@ -52,7 +52,7 @@
                                                 </button>
                                             </div>
                                             <div class="p-5">
-                                                <form class="user" method="post" action="<?= base_url('pembayaran/pem_buku'); ?>" enctype="multipart/form-data">
+                                                <form class="user" method="post" action="<?= base_url('snap/token') ?>" enctype="multipart/form-data">
                                                     <div class="form-group">
                                                         <label for="id">Id</label><br>
                                                         <input type="hidden" name="nisn" value="<?php echo $t->nisn ?>">
@@ -62,26 +62,38 @@
 
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Paket</label>
-                                                        <select id="paket" name="paket" class="form-control">
-                                                            <option>Pilih Jenis Paket</option>
-                                                            <?php
-                                                            foreach ($this->db->query('SELECT * from Paket')->result() as $sis) { /*$this->m_transaksi->tampil_datatahun()->result() */
-                                                            ?>
-
-                                                                <option value="<?php echo $sis->nama_paket ?>"> <?php echo $sis->nama_paket ?> </option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Jenis Pembayaran</label>
+                                                        <label>Semester</label>
                                                         <select id="jenis_pembayaran" name="jenis_pembayaran" class="form-control" oninput="CekInput()">
-                                                            <option>Pilih Jenis Pembayaran</option>
+                                                            <option selected disabled>Pilih Semester</option>
                                                             <?php
                                                             foreach ($this->db->query('SELECT * from jenis_pembayaran')->result() as $sis) { /*$this->m_transaksi->tampil_datatahun()->result() */
                                                             ?>
 
                                                                 <option value="<?php echo $sis->jenis_pembayaran ?>"> <?php echo $sis->jenis_pembayaran ?> | Rp.<?php echo number_format($sis->besar_tagihan) ?> </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>kelas</label>
+                                                        <select id="kelas" name="kelas" class="form-control">
+                                                            <option selected disabled>Pilih kelas</option>
+                                                            <?php
+                                                            foreach ($this->db->query('SELECT * from kelas')->result() as $sis) { /*$this->m_transaksi->tampil_datatahun()->result() */
+                                                            ?>
+
+                                                                <option value="<?php echo $sis->id ?>"><?php echo $sis->kelas ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Jurusan</label>
+                                                        <select id="jurusan" name="jurusan" class="form-control">
+                                                            <option selected disabled>Pilih jurusan</option>
+                                                            <?php
+                                                            foreach ($this->db->query('SELECT * from rombel')->result() as $sis) { /*$this->m_transaksi->tampil_datatahun()->result() */
+                                                            ?>
+
+                                                                <option value="<?php echo $sis->id ?>"><?php echo $sis->rombel ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -103,7 +115,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" name="update" class="btn btn-primary">Bayar</button>
+                                                        <button type="submit" id="pay-button" class="btn btn-primary">Bayar</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -118,6 +130,11 @@
         </div>
     </div>
 </div>
+
+<form id="payment-form" method="post" action="<?= site_url() ?>/snap/finish">
+    <input type="hidden" name="result_type" id="result-type" value=""></div>
+    <input type="hidden" name="result_data" id="result-data" value=""></div>
+</form>
 <script>
     function CekInput() {
         a = $("select#jenis_pembayaran option").filter(":selected").val();

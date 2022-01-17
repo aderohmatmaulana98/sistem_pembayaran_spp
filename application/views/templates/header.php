@@ -14,8 +14,11 @@
     <link rel="stylesheet" href="<?= base_url('assets/vendor/bootstrap-select/dist/css/bootstrap-select.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/assets/vendors/perfect-scrollbar/perfect-scrollbar.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/assets/css/app.css') ?>">
-    <link rel="shortcut icon" href="<?= base_url('assets/assets/images/favicon.svg')  ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url('assets/assets/images/logo/logo.PNG')  ?>" type="image/x-icon">
     <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-L2NAI0yRgyVu1zyA"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 
 <body>

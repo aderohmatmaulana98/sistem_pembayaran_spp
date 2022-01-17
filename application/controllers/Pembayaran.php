@@ -6,6 +6,7 @@ class Pembayaran extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->load->model('M_transaksi');
         $this->load->model('M_jenis_pembayaran');
         $this->load->helper('url');
@@ -101,7 +102,6 @@ class Pembayaran extends CI_Controller
         $jenis_pembayaran = $this->input->post('jenis_pembayaran');
         $besar_tagihan = $this->input->post('besar_tagihan');
         $metode_pembayaran = $this->input->post('metode_pembayaran');
-        $paket = $this->input->post('paket');
         $status_bayar = $this->input->post('status_bayar');
         $data = array(
             'id_tag_buku' => $id_tag_buku,
@@ -110,13 +110,13 @@ class Pembayaran extends CI_Controller
             'jenis_pembayaran' => $jenis_pembayaran,
             'besar_tagihan' => $besar_tagihan,
             'metode_pembayaran' => $metode_pembayaran,
-            'paket' => $paket,
             'status_bayar' => '0',
         );
         // var_dump($data);
         // die;
         $where = array('id_tag_buku' => $id_tag_buku);
         $sql = $this->M_jenis_pembayaran->update_data($where, $data, 'tagihan_buku');
+
         if ($sql) { // Jika sukses
             echo "<script>alert('Data berhasil disimpan');window.location = '" . base_url('pembayaran/detail/' . $nisn, '') . "';</script>";
         } else { // Jika gagal

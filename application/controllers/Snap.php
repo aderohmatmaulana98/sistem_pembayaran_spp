@@ -23,134 +23,100 @@ class Snap extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		//$params = array('server_key' => 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k', 'production' => false, 'sanitized' => true, '3ds' => true);
-		//$this->load->library('midtrans');
-		//$this->midtrans->config($params);
-		#Hendi, 2020-11-24
-		require_once APPPATH . 'vendor\midtrans\midtrans-php\Midtrans.php';
-		// Set your Merchant Server Key
-		\Midtrans\Config::$serverKey = $this->config->item('serverKey');
-		// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction
-		\Midtrans\Config::$isProduction = $this->config->item('isProduction');
-		// Set sanitization on (default)
-		\Midtrans\Config::$isSanitized = $this->config->item('isSanitized');
-		// Set 3DS transaction for credit card to true
-		\Midtrans\Config::$is3ds = $this->config->item('is3ds');
-		// Use new notification url(s) disregarding the settings on Midtrans Dashboard Portal (MAP)
-		\Midtrans\Config::$overrideNotifUrl = base_url('snap');
+		$params = array('server_key' => 'SB-Mid-server-yk6cIsZJjtFa-KfP4ebLd2bK', 'production' => false);
+		$this->load->library('midtrans');
+		$this->midtrans->config($params);
 		$this->load->helper('url');
 	}
 
 	public function index()
 	{
-		$this->load->view('checkout_snap');
+		$this->load->view('midtrans/checkout_snap');
 	}
 
 	public function token()
 	{
-		$nisn = $this->input->post('nisn');
-		$nama = $this->input->post('nama');
-		$bulan = $this->input->post('bulan', TRUE);
-		$jmlspp = $this->input->post('jml_spp');
-		$total = $this->input->post('total_spp');
 
+		// Required
 		$transaction_details = array(
 			'order_id' => rand(),
-			'gross_amount' => $total
+			'gross_amount' => 50000, // no decimal allowed for creditcard
 		);
 
 		// Optional
-		$item_details = array();
-		for ($i = 0; $i < count($bulan); $i++) {
-			// Optional
-			$idbln = $bulan[$i];
-			switch ($idbln) {
-				case '01':
-					$nmbulan = 'Januari';
-					break;
-				case '02':
-					$nmbulan = 'Februari';
-					break;
-				case '03':
-					$nmbulan = 'Maret';
-					break;
-				case '04':
-					$nmbulan = 'April';
-					break;
-				case '05':
-					$nmbulan = 'Mei';
-					break;
-				case '06':
-					$nmbulan = 'Juni';
-					break;
-				case '07':
-					$nmbulan = 'Juli';
-					break;
-				case '08':
-					$nmbulan = 'Agustus';
-					break;
-				case '09':
-					$nmbulan = 'September';
-					break;
-				case '10':
-					$nmbulan = 'Oktober';
-					break;
-				case '11':
-					$nmbulan = 'November';
-					break;
-				case '12':
-					$nmbulan = 'Desember';
-					break;
-				default:
-					$nmbulan = '';
-			}
+		$item1_details = array(
+			'id' => 'a1',
+			'price' => 10000,
+			'quantity' => 3,
+			'name' => "Apple"
+		);
 
-			$desc = "SPP " . $nmbulan . " " . date("Y");
-			$details = array(
-				'id' => "$idbln",
-				'price' => $jmlspp,
-				'quantity' => 1,
-				'name' => "$desc"
-			);
+		// Optional
+		$item2_details = array(
+			'id' => 'a2',
+			'price' => 20000,
+			'quantity' => 1,
+			'name' => "Orange"
+		);
 
-			array_push($item_details, $details);
-		}
+		// Optional
+		$item_details = array($item1_details, $item2_details);
+
 		// Optional
 		$billing_address = array(
-			'first_name' => "$nama",
-			'last_name' => 'a',
-			'address' => 'a',
-			'city' => 'a',
-			'postal_code' => 'a',
-			'phone' => 'a',
-			'country_code' => 'IDN'
+			'first_name'    => "Andri",
+			'last_name'     => "Litani",
+			'address'       => "Mangga 20",
+			'city'          => "Jakarta",
+			'postal_code'   => "16602",
+			'phone'         => "081122334455",
+			'country_code'  => 'IDN'
 		);
+
 		// Optional
 		$shipping_address = array(
-			'first_name' => "$nama",
-			'last_name' => 'a',
-			'address' => 'a',
-			'city' => 'a',
-			'postal_code' => 'a',
-			'phone' => 'a',
-			'country_code' => 'IDN'
+			'first_name'    => "Obet",
+			'last_name'     => "Supriadi",
+			'address'       => "Manggis 90",
+			'city'          => "Jakarta",
+			'postal_code'   => "16601",
+			'phone'         => "08113366345",
+			'country_code'  => 'IDN'
 		);
+
 		// Optional
 		$customer_details = array(
-			'first_name' => "$nama",
-			'last_name' => 'a',
-			'email' => 'a',
-			'phone' => 'a',
-			'billing_address' => $billing_address,
+			'first_name'    => "Andri",
+			'last_name'     => "Litani",
+			'email'         => "andri@litani.com",
+			'phone'         => "081122334455",
+			'billing_address'  => $billing_address,
 			'shipping_address' => $shipping_address
 		);
-		//echo json_encode($item_details);exit;
+
+		// Data yang akan dikirim untuk request redirect_url.
+		$credit_card['secure'] = true;
+		//ser save_card true to enable oneclick or 2click
+		//$credit_card['save_card'] = true;
+
+		$time = time();
+		$custom_expiry = array(
+			'start_time' => date("Y-m-d H:i:s O", $time),
+			'unit' => 'minute',
+			'duration'  => 2
+		);
+
 		$transaction_data = array(
 			'transaction_details' => $transaction_details,
-			'item_details' => $item_details,
+			'item_details'       => $item_details,
+			'customer_details'   => $customer_details,
+			'credit_card'        => $credit_card,
+			'expiry'             => $custom_expiry
 		);
-		//'customer_details' => $customer_details	
-		$snapToken = \Midtrans\Snap::getSnapToken($transaction_data);
+
+		error_log(json_encode($transaction_data));
+		$snapToken = $this->midtrans->getSnapToken($transaction_data);
+		error_log($snapToken);
 		echo $snapToken;
 	}
 
@@ -161,26 +127,4 @@ class Snap extends CI_Controller
 		var_dump($result);
 		echo '</pre>';
 	}
-
-	public function cekStatusTransaksi($idtrx, $nisn, $orderid)
-	{ #orderid yg dikirim nilainya '' (kosong)
-		try {
-			$response = \Midtrans\Transaction::status($orderid);
-			if ($response->status_code == 200) {
-				$sql = "UPDATE spp_bulanan SET status='0' WHERE id_transaksi='$idtrx' AND nisn='$nisn' AND order_id='$orderid'";
-				$this->db->query($sql);
-				echo 'success';
-			} else {
-				if ($response->transaction_status == 'pending') {
-				} else {
-					$sql = "UPDATE spp_bulanan SET status='1' WHERE id_transaksi='$idtrx' AND nis='$nisn' AND order_id='$orderid'";
-					$this->db->query($sql);
-				}
-				echo $response->transaction_status;
-			}
-		} catch (Exception $e) {
-			echo 'Error: ' . $e->getCode() . ' ' . $e->getMessage();
-		}
-	}
 }
-//

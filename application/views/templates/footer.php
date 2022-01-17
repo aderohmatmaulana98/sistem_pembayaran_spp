@@ -4,7 +4,7 @@
             <p>2020 &copy; Voler</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a href="http://ahmadsaugi.com">Ahmad Saugi</a></p>
+            <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a href="#">Anisa Rahmawati</a></p>
         </div>
     </div>
 </footer>
@@ -47,6 +47,54 @@
     $('.custom-file-input').on('change', function() {
         let fileName = $(this).val().split('\\').pop();
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+</script>
+
+<script type="text/javascript">
+    $('#pay-button').click(function(event) {
+        event.preventDefault();
+        $(this).attr("disabled", "disabled");
+
+        $.ajax({
+            url: '<?= base_url('snap/token') ?>',
+            cache: false,
+
+            success: function(data) {
+                //location = data;
+
+                console.log('token = ' + data);
+
+                var resultType = document.getElementById('result-type');
+                var resultData = document.getElementById('result-data');
+
+                function changeResult(type, data) {
+                    $("#result-type").val(type);
+                    $("#result-data").val(JSON.stringify(data));
+                    //resultType.innerHTML = type;
+                    //resultData.innerHTML = JSON.stringify(data);
+                }
+
+                snap.pay(data, {
+
+                    onSuccess: function(result) {
+                        changeResult('success', result);
+                        console.log(result.status_message);
+                        console.log(result);
+                        $("#payment-form").submit();
+                    },
+                    onPending: function(result) {
+                        changeResult('pending', result);
+                        console.log(result.status_message);
+                        $("#payment-form").submit();
+                    },
+                    onError: function(result) {
+                        changeResult('error', result);
+                        console.log(result.status_message);
+                        $("#payment-form").submit();
+                    }
+                });
+            }
+        });
     });
 </script>
 </body>

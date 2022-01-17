@@ -317,7 +317,7 @@ class Admin extends CI_Controller
         } else {
             $pesan = $this->input->post('pesan');
 
-            $sql = "SELECT user.no_hp
+            $sql = "SELECT user.no_hp_ortu
                     FROM USER
                     WHERE user.role_id = 2";
             $no_hp = $this->db->query($sql)->result_array();

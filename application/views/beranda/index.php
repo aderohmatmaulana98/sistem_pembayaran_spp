@@ -13,7 +13,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/x-icon.png">
+    <link rel="shortcut icon" href="<?= base_url('assets/assets/images/logo/logo.PNG')  ?>" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets1/css/animate.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets1/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/assets1/css/all.min.css') ?>">
